@@ -86,21 +86,21 @@ async function run() {
     app.get('/product',async(req,res)=>{
         // console.log('query',req.query);
         // //page work
-        // const page = parseInt(req.query.page);
-        // const size = parseInt(req.query.size);
+        const page = parseInt(req.query.page);
+        const size = parseInt(req.query.size);
 
         const query = {};
         const cursor = productCollection.find(query);
 
-        // let product;
-        // if (page || size){
+        let product;
+        if (page || size){
 
-        //     product = await cursor.skip(page*size).limit(size).toArray();
-        // }
-        // else{
-        //     product = await cursor.toArray();
-        // }
-        const product = await cursor.toArray();
+            product = await cursor.skip(page*size).limit(size).toArray();
+        }
+        else{
+            product = await cursor.toArray();
+        }
+        // const product = await cursor.toArray();
         res.send(product);
     });
 
